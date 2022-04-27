@@ -19,11 +19,11 @@ Route::get('/', function () {
 
 Route::get('/hellow/{name}', function (string $name) {
     return 'Hellow '.$name;
-});
+}); // страница приветствия
 
 Route::get('/info/', function () {
     return 'Информация о проекте';
-});
+}); 
 
 Route::get('/news/', function () {
     return 'All News';
