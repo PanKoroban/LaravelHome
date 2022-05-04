@@ -15,7 +15,7 @@ class Controller extends BaseController
     public function getCategory(){
         $category = [];
         $faker = Factory::create();
-        for ($i = 1; $i<6; ++$i){
+        for ($i = 1; $i<7; ++$i){
             $category[] = [
                 'id' => $i,
                 'category' => $faker->city
@@ -27,7 +27,7 @@ class Controller extends BaseController
     public function getNews($id = NULL){
         $news = [];
         $faker = Factory::create();
-        for ($i =0; $i<10; ++$i){
+        for ($i =0; $i<100; ++$i){
             $news[] = [
                 'id' => $i,
                 'category_id' => rand(1,5),

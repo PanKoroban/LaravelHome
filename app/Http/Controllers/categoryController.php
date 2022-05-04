@@ -26,7 +26,16 @@ class categoryController extends Controller
                 $catNews[] = $n;
             }
         }
-        return view('catNews', ['news' => $catNews]);
+        $cat = $this->getCategory();
+        foreach ($cat as $c){
+            if($c['id'] == $id){
+                $cat = $c;
+                break;
+            }
+        }
+
+
+        return view('catNews', ['news' => $catNews,'cat'=> $cat]);
     }
 
     /**

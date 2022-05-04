@@ -13,7 +13,7 @@ class newsController extends Controller
      */
     public function index()
     {
-        return view('allnews', ['news'=> $this->getNews()]);
+        return view('allnews', ['news'=> $this->getNews(), 'cat'=> $this->getCategory()]);
     }
 
     public function news($id)
