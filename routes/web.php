@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\welcomeController;
+use \App\Http\Controllers\categoryController;
+use \App\Http\Controllers\newsController;
+use \App\Http\Controllers\addOrderController;
+use \App\Http\Controllers\addController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,22 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [welcomeController::class, 'index']);
 
-Route::get('/hellow/{name}', function (string $name) {
-    return 'Hellow '.$name;
-}); // страница приветствия
+Route::get('/category', [categoryController::class, 'index']);
 
-Route::get('/info/', function () {
-    return 'Информация о проекте';
-}); 
+Route::get('/category/{id}', [categoryController::class, 'catNews']);
 
-Route::get('/news/', function () {
-    return 'All News';
-});
+Route::get('/news/{id}', [newsController::class, 'news']);
 
-Route::get('/news/{id}', function ($id) {
-    return 'News #'.$id;
-});
+Route::get('/news', [newsController::class, 'index']);
+
+Route::get('/add', [addController::class, 'index']);
+
+Route::get('/addorder', [addOrderController::class, 'index']);
+
+
