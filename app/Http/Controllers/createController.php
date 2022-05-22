@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class categoryController extends Controller
+class createController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,31 +13,7 @@ class categoryController extends Controller
      */
     public function index()
     {
-        $category = $this->getCategory();
-        return view('category', ['category' => $category]);
-    }
-
-    public function catNews($id)
-    {
-        $news = $this->getNews();
-        $catNews = [];
-        foreach ($news as $n){
-            if($n['category_id'] == $id){
-                $catNews[] = $n;
-            }
-        }
-        $cat = $this->getCategory();
-        foreach ($cat as $c){
-            if($c['id'] == $id){
-                $cat = $c;
-                break;
-            }
-        }
-
-        if(!is_numeric($id)){
-            return response()->view('catNews', ['news' => $catNews,'cat'=> $cat], 404);
-        }
-        return view('catNews', ['news' => $catNews,'cat'=> $cat]);
+        return view('add');
     }
 
     /**
@@ -58,7 +34,8 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        file_put_contents('comment.txt',$request->except(['_token']), FILE_APPEND );
+        return response()->json($request->only('name'), 201);
     }
 
     /**
