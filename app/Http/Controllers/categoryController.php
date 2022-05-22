@@ -34,9 +34,11 @@ class categoryController extends Controller
             }
         }
 
+
         if(!is_numeric($id)){
             return response()->view('catNews', ['news' => $catNews,'cat'=> $cat], 404);
         }
+
         return view('catNews', ['news' => $catNews,'cat'=> $cat]);
     }
 
