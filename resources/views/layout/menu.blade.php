@@ -5,7 +5,8 @@
                 <a href="http://localhost/" class="btn btn-primary my-2">Главная</a>
                 <a href="http://localhost/category" class="btn btn-primary my-2">Категории</a>
                 <a href="http://localhost/news/" class="btn btn-primary my-2">Новости</a>
-                <a href="http://localhost/add/" class="btn btn-sm btn-outline-secondary">Добавить новость</a>
+                <a href="http://localhost/add/" class="btn btn-sm btn-outline-secondary">Добавить комментарий</a>
+                 <a href="http://localhost/addorder/" class="btn btn-sm btn-outline-secondary">Форма заказа</a>
             </p>
         </div>
     </div>

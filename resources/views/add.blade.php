@@ -11,19 +11,17 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-<form>
+
+<form method="post" action="{{route('store')}}">
+    @csrf
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Название статьи</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">Название новости здесь...</div>
+        <label for="name" class="form-label">Имя пользователя</label>
+        <input type="text" class="form-control" name="name" id="name">
+        <div id="emailHelp" class="form-text">Укажи имя...</div>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Текст новости</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Со всем согласен</label>
+        <label for="comment" class="form-label">Текст комментария</label>
+        <textarea class="form-control" id="comment" rows="3" name="comment"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
