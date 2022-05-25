@@ -21,13 +21,17 @@ class categoryController extends Controller
 
     public function catNews($id)
     {
+
         $model = app(Category::class);
         $categories = $model->getCategory($id);
 //        dd($categories);
+
         if(!is_numeric($id)){
             return response()->view('catNews', 404);
         }
+
         return view('catNews', ['cat' => $categories]);
+
     }
 
     /**
