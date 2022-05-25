@@ -1,1 +1,8 @@
 тесттестsdfsdfdfsdfssdfsdf\zxzczxczzxczxczxcz
+public function test_create_3()
+    {
+        $data = ['name'=>'Alexander'];
+        $response = $this->post(route('store'), $data);
+
+        $response->assertJsonPath('name', 'Alexander');
+    }

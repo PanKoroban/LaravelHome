@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class categoryController extends Controller
@@ -13,33 +14,24 @@ class categoryController extends Controller
      */
     public function index()
     {
-        $category = $this->getCategory();
-        return view('category', ['category' => $category]);
+        $model = app(Category::class);
+        $categories = $model->getCategories();
+        return view('category', ['category' => $categories]);
     }
 
     public function catNews($id)
     {
-        $news = $this->getNews();
-        $catNews = [];
-        foreach ($news as $n){
-            if($n['category_id'] == $id){
-                $catNews[] = $n;
-            }
-        }
-        $cat = $this->getCategory();
-        foreach ($cat as $c){
-            if($c['id'] == $id){
-                $cat = $c;
-                break;
-            }
-        }
 
+        $model = app(Category::class);
+        $categories = $model->getCategory($id);
+//        dd($categories);
 
         if(!is_numeric($id)){
-            return response()->view('catNews', ['news' => $catNews,'cat'=> $cat], 404);
+            return response()->view('catNews', 404);
         }
 
-        return view('catNews', ['news' => $catNews,'cat'=> $cat]);
+        return view('catNews', ['cat' => $categories]);
+
     }
 
     /**

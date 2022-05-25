@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class newsController extends Controller
 {
@@ -13,12 +14,18 @@ class newsController extends Controller
      */
     public function index()
     {
-        return view('allnews', ['news'=> $this->getNews(), 'cat'=> $this->getCategory()]);
+        $model = app(News::class);
+        $news = $model->getNews();
+//        dd($news);
+        return view('allnews', ['news'=> $news]);
     }
 
     public function news($id)
     {
-        return view('news', ['news'=> $this->getNews($id)]);
+        $model = app(News::class);
+        $news = $model->getOneNews($id);
+        //dd($news);
+        return view('news', ['news'=> $news]);
     }
 
 
