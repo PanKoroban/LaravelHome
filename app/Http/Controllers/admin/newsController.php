@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Queries\QueryBuilderCategories;
 use App\Queries\QueryBuilderNews;
 use Illuminate\Http\Request;
 use App\Models\News;
+
 
 class newsController extends Controller
 {
@@ -15,26 +19,17 @@ class newsController extends Controller
      */
     public function index(QueryBuilderNews $news)
     {
-
-        return view('allnews', ['news'=> $news->getNews()]);
+        return view('Admin.index', ['news'=> $news->getNews()]);
     }
-
-    public function news($id, QueryBuilderNews $news)
-    {
-        $news = $news->getNewsById($id);
-        //dd($news);
-        return view('news', ['news'=> $news]);
-    }
-
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(QueryBuilderCategories $category)
     {
-        //
+        return view('Admin.newsCreate', ['category' =>$category->getCategories()]);
     }
 
     /**
@@ -45,7 +40,13 @@ class newsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->only(['categories_id', 'title', 'author', 'description', 'status']);
+        $news = new News($validated);
+        if($news->save()){
+            return redirect()->route('admin.news.index')->with('success', 'Запись добавлена');
+        }
+
+        return back()->with('error', 'Ошибка добавления');
     }
 
     /**
@@ -65,9 +66,9 @@ class newsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news, QueryBuilderCategories $category)
     {
-        //
+        return view('Admin.newsEdit', ['news' => $news, 'category' => $category->getCategories()]);
     }
 
     /**
@@ -77,9 +78,15 @@ class newsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+        $validated = $request->only(['categories_id', 'title', 'author', 'description', 'status']);
+        $news = new News($validated);
+        if($news->save()){
+            return redirect()->route('admin.news.index')->with('success', 'Запись добавлена');
+        }
+
+        return back()->with('error', 'Ошибка добавления');
     }
 
     /**

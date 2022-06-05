@@ -7,7 +7,8 @@
                 <a href="http://localhost/news/" class="btn btn-primary my-2">Новости</a>
                 <a href="http://localhost/add/" class="btn btn-sm btn-outline-secondary">Добавить комментарий</a>
                  <a href="http://localhost/addorder/" class="btn btn-sm btn-outline-secondary">Форма заказа</a>
-            </p>
+                 <a href="{{route('admin.news.index')}}" class="btn btn-sm btn-outline-secondary">Админка</a>
+             </p>
         </div>
     </div>
 </section>
