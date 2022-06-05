@@ -15,7 +15,7 @@
             </button>
         </a>
 
-                                        <a href="{{asset('/category/')}}/{{$n->cat_title}}">
+                                        <a href="{{route('catNews', ['id' => $n->categories_id])}}">
                                 <button type="button" class="btn btn-secondary"> Категория: {{$n->cat_title}}</button>
                                         </a>
 
@@ -27,6 +27,8 @@
                     </div>
 @endforeach
             </div>
+            {{$news->links()}}
+
         </div>
     </div>
 @endsection
