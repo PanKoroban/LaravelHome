@@ -1,12 +1,16 @@
-<?php
-use \App\Http\Controllers\createController;
-?>
 @extends('layout.main')
 @section('content')
 
+{{--<form action="addController.php" method="post">--}}
+{{--    <input type="text" name="name">--}}
+{{--    <textarea name = 'full_text'>--}}
+{{--    </textarea>--}}
+{{--    <input type="submit">--}}
+{{--</form>--}}
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
 
 <form method="post" action="{{route('store')}}">
     @csrf
