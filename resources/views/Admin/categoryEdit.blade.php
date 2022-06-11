@@ -3,6 +3,8 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
+            @include('inc.messages')
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <p>Редактирование категории:</p>
                 <form method="post" action="{{route('admin.category.update', ['category' => $category])}}">

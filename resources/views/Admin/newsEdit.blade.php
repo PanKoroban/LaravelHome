@@ -3,13 +3,16 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
+            @include('inc.messages')
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
 
                 <form method="post" action="{{route('admin.news.update', ['news'=> $news])}}">
                     @csrf
                     @method('put')
                     <div class="form-group">
-                        <label for="category_id">Категория</label>
+                        <label for="categories_id">Категория</label>
                         <select class="form-control" name="categories_id" id="category_id">
                             @foreach($category as $cat)
                                 <option value="{{$cat->id}}"
