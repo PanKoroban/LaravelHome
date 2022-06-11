@@ -17,8 +17,8 @@
                                     </button>
                                 </a>
 
-                                <a href="{{asset('/category/')}}/{{$c->title}}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary"> Удалить {{$c->title}}</button>
+                                <a href="javascript:;" class = "delete" rel = "{{$c->id}}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"> Удалить </button>
                                 </a>
 
 
@@ -41,3 +41,31 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            const el = document.querySelectorAll(".delete");
+            el.forEach(function(value, key){
+                value.addEventListener('click', function() {
+                    const id = this.getAttribute('rel');
+                    if(confirm('Подтвердите удаление')){
+                        send('http://localhost/admin/category/' + id).then(() => {
+                            location.reload();
+                        })
+                    }
+                })
+            })
+        })
+        async function send(url){
+            let responce = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    {{--"_token: {{csrf_token()}}" такой вариант возможен если делаем js в php файле - не рекомендуется--}}
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            let result = await responce.json();
+            return result.ok;
+        }
+    </script>
+@endpush

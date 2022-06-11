@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Http\Requests\news\StoreRequest;
+use App\Http\Requests\news\UpdateRequest;
+use App\Models\News;
 use App\Queries\QueryBuilderCategories;
 use App\Queries\QueryBuilderNews;
-use Illuminate\Http\Request;
-use App\Models\News;
 
 
 class newsController extends Controller
@@ -38,15 +38,15 @@ class newsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validated = $request->only(['categories_id', 'title', 'author', 'description', 'status']);
+        $validated = $request->validated();
         $news = new News($validated);
         if($news->save()){
-            return redirect()->route('admin.news.index')->with('success', 'Запись добавлена');
+            return redirect()->route('admin.news.index')->with('success', __('message.admin.news.create.success'));
         }
 
-        return back()->with('error', 'Ошибка добавления');
+        return back()->with('error', __('message.admin.news.create.fail'));
     }
 
     /**
@@ -78,15 +78,15 @@ class newsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateRequest $request, News $news)
     {
-        $validated = $request->only(['categories_id', 'title', 'author', 'description', 'status']);
-        $news = new News($validated);
+        $validated = $request->validated();
+        $news = $news->fill($validated);
         if($news->save()){
-            return redirect()->route('admin.news.index')->with('success', 'Запись добавлена');
+            return redirect()->route('admin.news.index')->with('success', __('message.admin.news.update.success'));
         }
 
-        return back()->with('error', 'Ошибка добавления');
+        return back()->with('error', __('message.admin.news.update.fail'));
     }
 
     /**
@@ -95,8 +95,15 @@ class newsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //
+        try {
+            $news->delete();
+            return response()->json('ok');
+        } catch(\Exception $e){
+            \Log::error($e->getMessage());
+            return response()->json('error', 400);
+        }
+
     }
 }
