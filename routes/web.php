@@ -9,6 +9,8 @@ use \App\Http\Controllers\addController;
 use \App\Http\Controllers\createController;
 use \App\Http\Controllers\admin\categoryController as AdminCategoryController;
 use \App\Http\Controllers\admin\newsController as AdminNewsController;
+use \App\Http\Controllers\Acc\AccountController as AccountController;
+use \App\Http\Controllers\admin\ProfileController as ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +40,17 @@ Route::get('/addorder', [addOrderController::class, 'index']);
 Route::post('/addorder',[addOrderController::class, 'store'])->name('orderstore');
 
 //admin routes
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::resource('/category', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('/account', AccountController::class)->name('account');
+
+    Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], function() {
+        Route::resource('/category', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+        });
+    Route::match(['get', 'post'],'/profile', [ProfileController::class, 'update']);
 });
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
