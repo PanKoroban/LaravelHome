@@ -7,10 +7,13 @@ use \App\Http\Controllers\newsController;
 use \App\Http\Controllers\addOrderController;
 use \App\Http\Controllers\addController;
 use \App\Http\Controllers\createController;
+
 use \App\Http\Controllers\admin\categoryController as AdminCategoryController;
 use \App\Http\Controllers\admin\newsController as AdminNewsController;
+
 use \App\Http\Controllers\Acc\AccountController as AccountController;
 use \App\Http\Controllers\admin\ProfileController as ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

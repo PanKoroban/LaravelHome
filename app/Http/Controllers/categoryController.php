@@ -21,7 +21,9 @@ class categoryController extends Controller
 
     public function catNews($id, QueryBuilderCategories $categories)
     {
+
         return view('catNews', ['cat' => $categories->getCategoryById($id)]);
+
     }
 
     /**
