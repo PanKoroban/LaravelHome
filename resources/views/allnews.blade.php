@@ -1,4 +1,5 @@
 @extends('layout.main')
+@extends('layouts.app2')
 @section('content')
     <div class="album py-5 bg-light">
         <div class="container">

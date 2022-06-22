@@ -13,6 +13,8 @@ use \App\Http\Controllers\admin\newsController as AdminNewsController;
 
 use \App\Http\Controllers\Acc\AccountController as AccountController;
 use \App\Http\Controllers\admin\ProfileController as ProfileController;
+use \App\Http\Controllers\admin\ParserController as ParserController;
+use \App\Http\Controllers\SocialController as SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,11 +51,19 @@ Route::group(['middleware' => 'auth'], function (){
     Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::resource('/category', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
-        });
-    Route::match(['get', 'post'],'/profile', [ProfileController::class, 'update']);
+        Route::get('/parser', ParserController::class)->name('parser');
+    });
+    Route::match(['get', 'post'],'/profile', [ProfileController::class, 'update'])->name('profile');
 });
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['midleware' => 'guest'], function (){
+    Route::get('/auth/{driver}/redirect', [SocialController::class, 'redirect'])->where('driver', '\w+')
+    ->name('social.redirect');
+    Route::any('auth/{drivaer}/callback', [SocialController::class, 'callback'])->where('driver', '\w+')
+        ->name('social.callback');
+});
