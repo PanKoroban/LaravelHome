@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::resource('/category', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
         });
-    Route::match(['get', 'post'],'/profile', [ProfileController::class, 'update']);
+    Route::match(['get', 'post'],'/profile', [ProfileController::class, 'update'])->name('profile');
 });
 
 
