@@ -8,6 +8,7 @@ use App\Http\Requests\news\UpdateRequest;
 use App\Models\News;
 use App\Queries\QueryBuilderCategories;
 use App\Queries\QueryBuilderNews;
+use App\Services\UploadService;
 
 
 class newsController extends Controller
@@ -78,9 +79,14 @@ class newsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, News $news)
+    public function update(UpdateRequest $request, News $news, UploadService $uploadService)
     {
         $validated = $request->validated();
+
+        if($request->hasFile('img')){
+            $validated['img'] = $uploadService->UploadImage($request->file('img'));
+        }
+
         $news = $news->fill($validated);
         if($news->save()){
             return redirect()->route('admin.news.index')->with('success', __('message.admin.news.update.success'));

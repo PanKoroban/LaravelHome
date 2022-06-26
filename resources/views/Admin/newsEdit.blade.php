@@ -8,7 +8,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
 
-                <form method="post" action="{{route('admin.news.update', ['news'=> $news])}}">
+                <form method="post" action="{{route('admin.news.update', ['news'=> $news])}}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="form-group">
@@ -36,7 +36,15 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание новости</label>
-                        <textarea class="form-control" id="comment" rows="3" name="description">{{$news->description}}</textarea>
+                        <textarea class="form-control" id="description" rows="3" name="description">{{$news->description}}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="img">Изображение</label>
+                        @if($news->img)
+                            <img src="{{ Storage::url($news->img) }}" style="width: 350px;">
+                        @endif
+                        <input type="file" id="img" name="img" class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -54,4 +62,13 @@
         </div>
     </div>
 @endsection
-
+@push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush
